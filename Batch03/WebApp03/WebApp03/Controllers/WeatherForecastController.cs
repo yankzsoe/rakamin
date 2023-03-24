@@ -54,15 +54,16 @@ namespace WebApp03.Controllers
             var issuer = _configuration.GetSection("Jwt:Issuers").Get<string[]>();
             var audience = _configuration.GetSection("Jwt:Audiences").Get<string[]>();
             var inSecond = double.Parse(_configuration["Jwt:Duration"]);
+            var exp = DateTime.Now.AddSeconds(inSecond);
 
             var token = new JwtSecurityToken(
                 issuer: issuer[0],
                 audience: audience[0],
                 claims: claims,
-                expires: DateTime.UtcNow.AddSeconds(inSecond),
+                expires: exp,
                 signingCredentials: creds);
 
-            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), Expire = exp });
         }
 
     }
