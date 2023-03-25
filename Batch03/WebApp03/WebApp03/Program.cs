@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 
 // Add Sagger
 builder.Services.AddSwaggerGen(c => {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo {
+    c.SwaggerDoc("v1", new OpenApiInfo {
         Title = "Weather API",
         Version = "v1",
         Description = "This API for sample only"
