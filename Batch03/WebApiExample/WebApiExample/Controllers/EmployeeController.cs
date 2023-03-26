@@ -26,6 +26,7 @@ namespace WebApiExample.Controllers {
             return Ok(result);
         }
 
+        /*
         [HttpPost("")]
         public async Task<IActionResult> PostEmployee(Employee employee) {
             var result = await _dummyRestApi.PostEmployeeAsync(employee);
@@ -43,5 +44,6 @@ namespace WebApiExample.Controllers {
             var result = await _dummyRestApi.DeleteEmployeeAsync(id);
             return Ok(result);
         }
+        */
     }
 }

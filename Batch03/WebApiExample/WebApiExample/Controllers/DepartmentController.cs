@@ -33,7 +33,7 @@ namespace WebApiExample.Controllers {
         }
 
 
-        /*
+        
         [HttpPost("")]
         public async Task<IActionResult> PostDepartments(Department Department) {
             await _context.Departments.AddAsync(Department);
@@ -75,6 +75,6 @@ namespace WebApiExample.Controllers {
             }
             return BadRequest();
         }
-        */
+        
     }
 }
