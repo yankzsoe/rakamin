@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiExample.Helper;
@@ -9,9 +9,12 @@ namespace WebApiExample.Controllers {
     [ApiController]
     public class DepartmentController : ControllerBase {
         private readonly DataContext _context;
+        private readonly ILogger<DepartmentController> _logger;
 
-        public DepartmentController(DataContext context) {
+        public DepartmentController(DataContext context, ILogger<DepartmentController> logger)
+        {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet("")]

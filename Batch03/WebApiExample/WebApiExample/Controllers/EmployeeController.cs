@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using WebApiExample.Model;
 using WebApiExample.Services;
 
@@ -22,8 +23,19 @@ namespace WebApiExample.Controllers {
 
         [HttpGet("ById")]
         public IActionResult GetEmployeeById(int id) {
-            var result = _dummyRestApi.GetEmployeeByIdAsync(id);
-            return Ok(result);
+            try
+            {
+                var result = _dummyRestApi.GetEmployeeById(id);
+                return Ok(result);
+            }
+            catch (HttpRequestException ex) when (ex.StatusCode.HasValue)
+            {
+                var statusCode = (int)ex.StatusCode.Value;
+                return StatusCode(statusCode, ex.Message);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         /*
