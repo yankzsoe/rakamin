@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiExample.Dtos.Department;
 using WebApiExample.Model;
 
 namespace WebApiExample.Controllers {
@@ -20,7 +21,16 @@ namespace WebApiExample.Controllers {
             if (data == null || data.Count == 0) {
                 return NotFound();
             }
-            return Ok(data);
+            var list = new List<DepartmentResponseDto>();
+            foreach (var department in data) {
+                list.Add(new DepartmentResponseDto {
+                    Id = department.Id,
+                    DepartmentName = department.DepartmentName,
+                    Description = department.Description,
+                    IsActive = department.IsActive,
+                });
+            }
+            return Ok(list);
         }
 
         [HttpGet("{id:int}")]
@@ -29,36 +39,58 @@ namespace WebApiExample.Controllers {
             if (data == null) {
                 return NotFound();
             }
-            return Ok(data);
+            var resp = new DepartmentResponseDto() {
+                Id = data.Id,
+                DepartmentName = data.DepartmentName,
+                Description = data.Description,
+                IsActive = data.IsActive,
+            };
+            return Ok(resp);
         }
 
 
 
         [HttpPost("")]
-        public async Task<IActionResult> PostDepartments(Department Department) {
-            await _context.Departments.AddAsync(Department);
+        public async Task<IActionResult> PostDepartments(DepartmentInsertDto dto) {
+            var dept = new Department() {
+                DepartmentName = dto.DepartmentName,
+                Description = dto.Description,
+                IsActive = dto.IsActive,
+            };
+
+            await _context.Departments.AddAsync(dept);
             var result = await _context.SaveChangesAsync();
+
             if (result > 0) {
-                return StatusCode(201, Department);
+                var resp = new DepartmentResponseDto() {
+                    Id = dept.Id,
+                    DepartmentName = dept.DepartmentName,
+                    Description = dept.Description,
+                    IsActive = dept.IsActive,
+                };
+                return StatusCode(201, resp);
             }
+
             return BadRequest();
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> PutDepartments(int id, Department Department) {
+        public async Task<IActionResult> PutDepartments(int id, DepartmentInsertDto dto) {
             var data = await _context.Departments.FirstOrDefaultAsync(c => c.Id == id);
             if (data == null) {
                 return NotFound();
             }
+
             data.Id = id;
-            data.DepartmentName = Department.DepartmentName;
-            data.Description = Department.Description;
-            data.IsActive = Department.IsActive;
+            data.DepartmentName = dto.DepartmentName;
+            data.Description = dto.Description;
+            data.IsActive = dto.IsActive;
             var result = await _context.SaveChangesAsync();
+            
             if (result > 0) {
-                Department.Id = id;
-                return StatusCode(201, Department);
+                return StatusCode(201, dto);
             }
+
             return BadRequest();
         }
 

@@ -15,5 +15,7 @@ namespace WebApiExample.Model {
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
+
+        public List<Pegawai> Pegawai { get; set; }
     }
 }

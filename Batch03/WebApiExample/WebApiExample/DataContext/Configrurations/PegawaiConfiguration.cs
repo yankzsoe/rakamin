@@ -7,6 +7,13 @@ namespace WebApiExample.DataContext.Configrurations {
         public void Configure(EntityTypeBuilder<Pegawai> builder) {
             // Set PrimaryKey
             builder.HasKey(x => x.Id);
+
+            // Set One to One realation
+            // And Set ForeginKey
+            builder.HasOne(p => p.Department)
+                .WithMany(e => e.Pegawai)
+                .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

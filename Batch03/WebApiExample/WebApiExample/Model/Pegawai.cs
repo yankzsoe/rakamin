@@ -15,5 +15,8 @@ namespace WebApiExample.Model {
 
         [StringLength(250)]
         public string Alamat { get; set; }
+
+        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

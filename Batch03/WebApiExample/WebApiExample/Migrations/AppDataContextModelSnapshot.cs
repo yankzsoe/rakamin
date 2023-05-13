@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApiExample.DataContext;
@@ -12,10 +11,9 @@ using WebApiExample.DataContext;
 namespace WebApiExample.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20230513040145_AddObjectPegawai")]
-    partial class AddObjectPegawai
+    partial class AppDataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +62,9 @@ namespace WebApiExample.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Dob")
                         .HasColumnType("timestamp with time zone");
 
@@ -74,7 +75,25 @@ namespace WebApiExample.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
                     b.ToTable("Pegawai");
+                });
+
+            modelBuilder.Entity("WebApiExample.Model.Pegawai", b =>
+                {
+                    b.HasOne("WebApiExample.Model.Department", "Department")
+                        .WithMany("Pegawai")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("WebApiExample.Model.Department", b =>
+                {
+                    b.Navigation("Pegawai");
                 });
 #pragma warning restore 612, 618
         }
