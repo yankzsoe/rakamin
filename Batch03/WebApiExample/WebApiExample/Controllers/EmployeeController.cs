@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using WebApiExample.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApiExample.Services;
 
 namespace WebApiExample.Controllers {
@@ -23,17 +20,13 @@ namespace WebApiExample.Controllers {
 
         [HttpGet("ById")]
         public IActionResult GetEmployeeById(int id) {
-            try
-            {
+            try {
                 var result = _dummyRestApi.GetEmployeeById(id);
                 return Ok(result);
-            }
-            catch (HttpRequestException ex) when (ex.StatusCode.HasValue)
-            {
+            } catch (HttpRequestException ex) when (ex.StatusCode.HasValue) {
                 var statusCode = (int)ex.StatusCode.Value;
                 return StatusCode(statusCode, ex.Message);
-            }catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }

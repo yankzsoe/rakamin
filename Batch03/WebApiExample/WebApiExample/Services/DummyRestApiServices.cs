@@ -23,17 +23,12 @@ namespace WebApiExample.Services {
 
         public EmployeeResponse GetEmployeeById(int id) {
             var response = _httpClient.GetAsync($"employee/{id}").Result;
-            try
-            {
+            try {
                 response.EnsureSuccessStatusCode();
-                using (var responseStream = response.Content.ReadAsStreamAsync().Result)
-                {
+                using (var responseStream = response.Content.ReadAsStreamAsync().Result) {
                     return JsonSerializer.Deserialize<EmployeeResponse>(responseStream);
                 }
-            }
-            catch (Exception ex)
-            {
-
+            } catch (Exception) {
                 throw;
             }
         }

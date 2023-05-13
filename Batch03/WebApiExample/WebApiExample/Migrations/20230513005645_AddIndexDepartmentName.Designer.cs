@@ -10,16 +10,15 @@ using WebApiExample.DataContext;
 
 namespace WebApiExample.Migrations
 {
-    [DbContext(typeof(DataContext.AppDataContext))]
-    [Migration("20230125135118_AddDepartmentModel")]
-    partial class AddDepartmentModel
+    [DbContext(typeof(AppDataContext))]
+    [Migration("20230513005645_AddIndexDepartmentName")]
+    partial class AddIndexDepartmentName
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -46,7 +45,10 @@ namespace WebApiExample.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.HasIndex("DepartmentName")
+                        .IsUnique();
+
+                    b.ToTable("Departments", (string)null);
                 });
 #pragma warning restore 612, 618
         }

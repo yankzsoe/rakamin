@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Http; 
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApiExample.Helper;
 using WebApiExample.Model;
 
 namespace WebApiExample.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase {
-        private readonly DataContext _context;
+        private readonly DataContext.AppDataContext _context;
         private readonly ILogger<DepartmentController> _logger;
 
-        public DepartmentController(DataContext context, ILogger<DepartmentController> logger)
-        {
+        public DepartmentController(DataContext.AppDataContext context, ILogger<DepartmentController> logger) {
             _context = context;
             _logger = logger;
         }
@@ -36,7 +33,7 @@ namespace WebApiExample.Controllers {
         }
 
 
-        
+
         [HttpPost("")]
         public async Task<IActionResult> PostDepartments(Department Department) {
             await _context.Departments.AddAsync(Department);
@@ -78,6 +75,6 @@ namespace WebApiExample.Controllers {
             }
             return BadRequest();
         }
-        
+
     }
 }

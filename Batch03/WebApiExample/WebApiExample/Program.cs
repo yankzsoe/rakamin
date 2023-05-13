@@ -1,6 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using WebApiExample.Helper;
+using WebApiExample.DataContext;
 using WebApiExample.Services;
 
 namespace WebApiExample {
@@ -16,7 +15,7 @@ namespace WebApiExample {
             });
 
             //Register DataContext
-            builder.Services.AddDbContext<DataContext>();
+            builder.Services.AddDbContext<AppDataContext>();
 
             // Add Serilog
             var logger = new LoggerConfiguration()
