@@ -10,6 +10,7 @@ namespace WebApiExample.DataContext {
         }
 
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Pegawai> Pegawai { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder) {
             builder.UseNpgsql(_Configuration.GetConnectionString("postgresdb"));

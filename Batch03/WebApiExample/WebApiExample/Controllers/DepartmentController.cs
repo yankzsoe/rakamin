@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiExample.DataContext;
 using WebApiExample.Dtos.Department;
 using WebApiExample.Model;
 
@@ -7,10 +8,10 @@ namespace WebApiExample.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase {
-        private readonly DataContext.AppDataContext _context;
+        private readonly AppDataContext _context;
         private readonly ILogger<DepartmentController> _logger;
 
-        public DepartmentController(DataContext.AppDataContext context, ILogger<DepartmentController> logger) {
+        public DepartmentController(AppDataContext context, ILogger<DepartmentController> logger) {
             _context = context;
             _logger = logger;
         }
@@ -88,7 +89,7 @@ namespace WebApiExample.Controllers {
             var result = await _context.SaveChangesAsync();
             
             if (result > 0) {
-                return StatusCode(201, dto);
+                return StatusCode(200, dto);
             }
 
             return BadRequest();
