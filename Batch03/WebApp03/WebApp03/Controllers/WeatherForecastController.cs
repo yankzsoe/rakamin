@@ -26,7 +26,7 @@ namespace WebApp03.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpGet("cuaca")]
         [SwaggerOperation(Summary = "Get weather forecast", Description = "Get weather")]
         [Authorize]
         public IEnumerable<WeatherForecast> Get()
