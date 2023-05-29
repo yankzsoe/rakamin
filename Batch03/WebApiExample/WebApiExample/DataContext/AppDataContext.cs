@@ -20,10 +20,6 @@ namespace WebApiExample.DataContext {
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
             modelBuilder.ApplyConfiguration(new PegawaiConfiguration());
 
-            // Ignore Employee Model
-            // This model used by dummy.restapiexample
-            modelBuilder.Ignore<Employee>();
-
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using System.Text.Json;
+using WebApiExample.Dtos.Employee;
+using WebApiExample.Dtos.Employee.Common;
 using WebApiExample.Model;
-using WebApiExample.Model.Common;
 
-namespace WebApiExample.Services {
+namespace WebApiExample.Services
+{
     public class DummyRestApiServices {
         private readonly ILogger<DummyRestApiServices> _logger;
         private readonly HttpClient _httpClient;
@@ -34,7 +36,7 @@ namespace WebApiExample.Services {
         }
 
 
-        public async Task<EmployeeResponse> PostEmployeeAsync(Employee employee) {
+        public async Task<EmployeeResponse> PostEmployeeAsync(EmployeeDto employee) {
             var data = JsonSerializer.Serialize(employee);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("create", content);
@@ -44,7 +46,7 @@ namespace WebApiExample.Services {
             }
         }
 
-        public async Task<EmployeeResponse> PutEmployeeAsync(Employee employee) {
+        public async Task<EmployeeResponse> PutEmployeeAsync(EmployeeDto employee) {
             var data = JsonSerializer.Serialize(employee);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync($"update/{employee.id}", content);
@@ -53,14 +55,5 @@ namespace WebApiExample.Services {
                 return await JsonSerializer.DeserializeAsync<EmployeeResponse>(responseStream);
             }
         }
-
-        public async Task<DeleteEmployeeResponse> DeleteEmployeeAsync(int id) {
-            var response = await _httpClient.DeleteAsync($"delete/{id}");
-            response.EnsureSuccessStatusCode();
-            using (var responseStream = await response.Content.ReadAsStreamAsync()) {
-                return await JsonSerializer.DeserializeAsync<DeleteEmployeeResponse>(responseStream);
-            }
-        }
-
     }
 }

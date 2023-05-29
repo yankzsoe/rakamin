@@ -77,7 +77,7 @@ namespace WebApiExample.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Pegawai");
+                    b.ToTable("Pegawai", (string)null);
                 });
 
             modelBuilder.Entity("WebApiExample.Model.Pegawai", b =>

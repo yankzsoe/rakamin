@@ -1,5 +1,5 @@
-﻿namespace WebApiExample.Model {
-    public class Employee {
+﻿namespace WebApiExample.Dtos.Employee {
+    public class EmployeeDto {
         public int id { get; set; }
         public string employee_name { get; set; }
         public int employee_salary { get; set; }

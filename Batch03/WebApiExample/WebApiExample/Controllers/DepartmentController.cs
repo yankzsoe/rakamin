@@ -53,6 +53,10 @@ namespace WebApiExample.Controllers {
 
         [HttpPost("")]
         public async Task<IActionResult> PostDepartments(DepartmentInsertDto dto) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
             var dept = new Department() {
                 DepartmentName = dto.DepartmentName,
                 Description = dto.Description,

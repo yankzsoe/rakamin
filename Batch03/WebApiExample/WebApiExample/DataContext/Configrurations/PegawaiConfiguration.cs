@@ -8,7 +8,7 @@ namespace WebApiExample.DataContext.Configrurations {
             // Set PrimaryKey
             builder.HasKey(x => x.Id);
 
-            // Set One to One realation
+            // Set One to Many realation
             // And Set ForeginKey
             builder.HasOne(p => p.Department)
                 .WithMany(e => e.Pegawai)
